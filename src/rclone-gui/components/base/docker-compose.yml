@@ -1,0 +1,29 @@
+x-logging: &default-logging
+  driver: "json-file"
+  options:
+    max-size: "${LOG_MAX_SIZE:-10m}"
+    max-file: "${LOG_MAX_FILE:-3}"
+    compress: "${LOG_COMPRESS:-true}"
+
+services:
+  rclone-gui:
+    image: ${IMAGE:-decovar/rclone-rc-web-gui:latest}
+    container_name: rclone-gui
+    restart: unless-stopped
+    logging: *default-logging
+    environment:
+      TZ: ${TZ:-Etc/UTC}
+      RCLONE_USER: ${RCLONE_USER:-admin}
+      RCLONE_PASS: ${RCLONE_PASS}
+    volumes:
+      - rclone-gui-config:/home/rclone/.config/rclone:ro
+      - rclone-gui-settings:/var/www/rclone-rc-web-gui/js/settings
+      - rclone-gui-data:/data
+
+volumes:
+  rclone-gui-config:
+    name: rclone-gui-config
+  rclone-gui-settings:
+    name: rclone-gui-settings
+  rclone-gui-data:
+    name: rclone-gui-data

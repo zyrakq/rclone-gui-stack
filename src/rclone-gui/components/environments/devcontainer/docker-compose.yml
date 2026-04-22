@@ -1,0 +1,8 @@
+services:
+  rclone-gui:
+    networks:
+      - rclone-gui-workspace-network
+
+networks:
+  rclone-gui-workspace-network:
+    external: true

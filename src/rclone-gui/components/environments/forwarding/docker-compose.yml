@@ -1,0 +1,4 @@
+services:
+  rclone-gui:
+    ports:
+      - 5572:5572
